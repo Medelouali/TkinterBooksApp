@@ -12,8 +12,7 @@ def register(fr, last=[], err='', page="log", lastPacked=False):
             "width": 40,
             "pady": 5
         }
-        def validate():
-            print(nam.get(), ema.get(), pas.get())
+        
         nam=StringVar() 
         ema=StringVar() 
         pas=StringVar()
@@ -35,8 +34,9 @@ def register(fr, last=[], err='', page="log", lastPacked=False):
         passwordE=Entry(fr, show="*", width=uiAttr["width"], textvariable=pas)
         passwordE.grid(row=5, column=0, pady=uiAttr["pady"])
 
+        #doo some validation later on
         signUp=Button(fr, text="Create Account", 
-            command=lambda: registering([signIn , *widgets], nam.get(), ema.get(), pas.get()))
+            command=lambda: registering(fr, [signIn , *widgets], nam.get(), ema.get(), pas.get()))
         signUp.grid(row=6, column=0, padx=40, pady=20)
         #
         widgets=[ username, usernameE, email, emailE, password, passwordE, signUp]
@@ -68,8 +68,9 @@ def register(fr, last=[], err='', page="log", lastPacked=False):
         passwordE=Entry(fr, show="*", width=uiAttr["width"], textvariable=pas)
         passwordE.grid(row=3, column=0, pady=uiAttr["pady"])
         #logging prototype logging(historyWidgets, name, password)
+        #doo some validation later on
         logIn=Button(fr, text="Log In", 
-            command=lambda: validator([ signUp, *widgets], nam.get(), pas.get()))
+            command=lambda: logging(fr, [ signUp, *widgets], nam.get(), pas.get()))
         logIn.grid(row=4, column=0, padx=40, pady=20)
         #
         widgets=[ username, usernameE, password, passwordE, logIn]
