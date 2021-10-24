@@ -5,7 +5,7 @@ from ui.register.register import register
 def ui():
     root = Tk()
     root.title("Book Your Book")
-    root.geometry("650x350")
+    root.geometry("850x350")
     frame=LabelFrame(root, padx=40, pady=20)
     frame.pack()
     register(frame, [ frame ], lastPacked=True)
