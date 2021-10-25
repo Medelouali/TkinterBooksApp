@@ -83,13 +83,55 @@ def register(fr, last=[], err='', page="log", lastPacked=False):
         signUp = Button(fr, text="Don't Have An Account?", font=smallFont,
                         command=lambda : commander(fr, [signUp, *widgets ], err, 'signUp'))
         signUp.grid(row=5, column=0, padx=40, pady=20)
+    elif(page=='newPassword'):
+        frame=LabelFrame(fr, text="New Password", pady=1, font=fontStyle)
+        frame.grid(row=0, column=0, columnspan=2)
+        email=Label(frame, text="Please make sure you enter a strong password.", font=smallFont)
+        email.grid(row=1, column=0, padx= 5)
+
+        code=Label(frame, text="Password: ", font=smallFont)
+        code.grid(row=2, column=0, padx= 5)
+
+        codeValue=Entry(frame, show="*", width=60)
+        codeValue.grid(row=2, column=1, pady=1)
+
+        codeC=Label(frame, text="Confirm: ", font=smallFont)
+        codeC.grid(row=3, column=0, padx= 5)
+
+        codeConfirm=Entry(frame, show="*", width=60)
+        codeConfirm.grid(row=3, column=1, pady=1)
+
+        widgets=[frame, email, code, codeValue, codeC, codeConfirm]
+        submit=Button(frame, text="Log In", padx=1, pady=2, font=smallFont,
+            command=lambda: logging(fr, [ submit, *widgets], '', ''))
+        submit.grid(row=4, column=0, padx= 5)
+    elif(page=='forgot'):
+        frame=LabelFrame(fr, text="Resetting The Password", pady=1, font=fontStyle)
+        frame.grid(row=0, column=0, columnspan=3)
+        email=Label(frame,text="Please check out your emails a code has been send to you.", font=smallFont)
+        email.grid(row=1, column=0, padx= 5)
+
+        code=Label(frame, text= "Code: ", width=60, font=smallFont)
+        code.grid(row=2, column=0, padx= 5)
+
+        codeValue=Entry(frame, show="*", width=50)
+        codeValue.grid(row=3, column=0, pady=1)
+
+        widgets=[frame, email, code, codeValue]
+        submit=Button(frame, text="New Password", font=smallFont, 
+            command=lambda: commander(fr, [submit, *widgets], err, 'newPassword'))
+        submit.grid(row=4, column=0, padx= 5)
     else:
         signIn=Button(fr, text="Sign In", font=smallFont, 
-            command=lambda: commander(fr, [signIn, signUp], err, 'signIn'))
+            command=lambda: commander(fr, [signIn, signUp, forgotPassword], err, 'signIn'))
         signIn.grid(row=0, column=0, padx=40, pady=20)
         signUp=Button(fr, text="Sign Up", font=smallFont,
-            command=lambda: commander(fr, [signUp, signIn], err, 'signUp'))
+            command=lambda: commander(fr, [signUp, signIn, forgotPassword], err, 'signUp'))
         signUp.grid(row=1, column=0, padx=40, pady=20)
+
+        forgotPassword=Button(fr, text="Forgot Password", font=smallFont, borderwidth=0, fg='blue',
+            command=lambda: commander(fr, [signUp, signIn, forgotPassword], err, 'forgot'))
+        forgotPassword.grid(row=2, column=0, padx=40, pady=20)
     if(errMassage):
         lab=Label(fr, text=errMassage).grid(row=20, column=0, columnspan=W+E)
 
