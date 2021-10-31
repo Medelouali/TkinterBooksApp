@@ -2,14 +2,18 @@ from tkinter import *
 import tkinter.font as tkFont
 from ui.layout.browser.browser import browser
 
+lastWidgets=[]
+currentPage="books"
+
 def layout(rt, reg={}, history=[]):
     fontStyle = tkFont.Font(family = "Lucida Grande", size = 15)
     smallFont = tkFont.Font(family = "Lucida Grande", size = 10)
     justFont = tkFont.Font(family = "Lucida Grande")
-    collection=[]
+
+    global currentPage
+    global lastWidgets
     for hist in history:
         hist.grid_forget()
-    currentPage="books"
     labels={
         "width": 20,
         "height": 1
@@ -17,38 +21,37 @@ def layout(rt, reg={}, history=[]):
 
     def switchPage(page, collect=[]):
         global currentPage
-        currentPage=page
+        global lastWidgets
         for hist in collect:
             hist.grid_forget()
-        global collection
-        collection=browser(frame, page)
-
+        currentPage=page
+        lastWidgets=browser(frame, page)
 
     frame=LabelFrame(rt, text="You Are A Reader", pady=1, font=fontStyle)
     frame.grid(row=0, column=0, columnspan=3)
 
-    books=Button(frame, text="Books", command=lambda: switchPage("books", collection), font=smallFont,
+    books=Button(frame, text="Books", command=lambda: switchPage("books", lastWidgets), font=smallFont,
         width=labels["width"], height=labels["height"])
     books.grid(row=0, column=0, padx= 5)
 
-    authors=Button(frame, text="Authors", command=lambda: switchPage("authors", collection), font=smallFont, 
+    authors=Button(frame, text="Authors", command=lambda: switchPage("authors", lastWidgets), font=smallFont, 
         width=labels["width"], height=labels["height"])
     authors.grid(row=0, column=1, padx= 5)
 
-    copies=Button(frame, text="Copies", command=lambda: switchPage("copies", collection), font=smallFont,
+    copies=Button(frame, text="Copies", command=lambda: switchPage("copies", lastWidgets), font=smallFont,
         width=labels["width"], height=labels["height"])
     copies.grid(row=0, column=2, padx= 5)
 
-    editors=Button(frame, text="Editors", command=lambda: switchPage("editors", collection), font=smallFont,
+    editors=Button(frame, text="Editors", command=lambda: switchPage("editors", lastWidgets), font=smallFont,
         width=labels["width"], height=labels["height"])
     editors.grid(row=0, column=3, padx= 5)
 
     #the correspondant page should be displayed, this for setting the default page
-    collection=browser(frame, currentPage)
+    lastWidgets=browser(frame, currentPage)
 
     widgets=[frame, books, authors, copies, editors]
     getInTouch=Button(frame, text="Get In Touch", width=labels["width"]*2, height=1, font=smallFont,
-        command=lambda: contactUs(rt, [*widgets, getInTouch, *collection]))
+        command=lambda: contactUs(rt, [*widgets, getInTouch, *lastWidgets]))
     getInTouch.grid(row=100, column=0, columnspan=4)
 
 

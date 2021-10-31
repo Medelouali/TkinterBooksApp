@@ -1,5 +1,7 @@
 from tkinter import *
 
+#just for testing purposes...
+
 testList=[
     { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling'},
     { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling'},
@@ -14,7 +16,11 @@ def books(root):
     return widgets
 
 def book(root, index=2, title='', date='', description='', writtenBy=''):
-    frame=LabelFrame(root)
+    style={
+        'padx': 20, 
+        'pady': 1
+    }
+    frame=LabelFrame(root, padx=style['padx'],pady=style['pady'])
     frame.grid(row=index, column=0, columnspan=4)
 
     tit=Label(frame, text=title)
@@ -29,5 +35,5 @@ def book(root, index=2, title='', date='', description='', writtenBy=''):
     des=Label(frame, text=description)
     des.grid(row=2, column=0, columnspan=2)
     
-    return [frame, tit, dat, wri, des]
+    return [tit, dat, wri, des, frame]
 
