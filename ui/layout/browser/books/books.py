@@ -18,12 +18,13 @@ def books(root):
 def book(root, index=2, title='', date='', description='', writtenBy=''):
     style={
         'padx': 20, 
-        'pady': 1
+        'pady': 1,
+        'width': 90
     }
     frame=LabelFrame(root, padx=style['padx'],pady=style['pady'])
     frame.grid(row=index, column=0, columnspan=4)
 
-    tit=Label(frame, text=title)
+    tit=Label(frame, text=title, width=style['width'])
     tit.grid(row=0, column=0)
 
     dat=Label(frame, text=date)

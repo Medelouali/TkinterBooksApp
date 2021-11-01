@@ -18,9 +18,10 @@ def authors(root):
 def author(root, index=2, name='', birthday='', place='', branch='', stars=0, quote=''):
     style={
         'padx': 20, 
-        'pady': 1
+        'pady': 1,
+        'width': 90
     }
-    frame=LabelFrame(root, padx=style['padx'],pady=style['pady'])
+    frame=LabelFrame(root, padx=style['padx'],pady=style['pady'], width=style['width'])
     frame.grid(row=index, column=0, columnspan=4)
 
     nam=Label(frame, text=f'Author: {name}')
