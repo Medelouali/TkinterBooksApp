@@ -1,17 +1,23 @@
 from tkinter import *
 
+from ui.logic.widget import widgets
+from ui.layout.browser.scroller import scroller
 
 #just for testing purposes...
 
 testList=[
     { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling', 'editionYear': '2007', 'editionHouse': 'RabatBooks'},
     { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling', 'editionYear': '2007', 'editionHouse': 'RabatBooks'},
-    ]
+    { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling', 'editionYear': '2007', 'editionHouse': 'RabatBooks'},
+    { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling', 'editionYear': '2007', 'editionHouse': 'RabatBooks'},
+    { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling', 'editionYear': '2007', 'editionHouse': 'RabatBooks'},
+    { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling', 'editionYear': '2007', 'editionHouse': 'RabatBooks'},
+]
 
 def copies(root):
-    widgets=[]
+    widgets=scroller(root)
     for i, boo in enumerate(testList):
-        widgets+=copy(root, index=i+1, title=boo['title'], date=boo['date'], writtenBy=boo['writtenBy'], 
+        widgets+=copy(widgets[0]['widget'], index=i+1, title=boo['title'], date=boo['date'], writtenBy=boo['writtenBy'], 
         description=boo['description'], editionHouse=boo['editionHouse'], editionYear=boo['editionYear'])
     return widgets
 
@@ -44,4 +50,4 @@ def copy(root, index=2, title='', date='', description='', writtenBy='', edition
     edH=Label(frame, text=f'Copy Ed House: {editionHouse}')
     edH.grid(row=4, column=0, columnspan=2)
 
-    return [tit, dat, wri, des, edH, edY, frame]
+    return widgets([tit, dat, wri, des, edH, edY, frame])

@@ -1,15 +1,22 @@
 from tkinter import *
+
+from ui.logic.widget import widgets
+from ui.layout.browser.scroller import scroller
+
 #just for testing purposes...
 
 testList=[
     {'manager': 'El Ouali Med', 'location': "Marrakesh City", 'stars': 3, 'phone': '+212690238923', 'gmail': 'readWithUsCamus@gmail.com', 'websiteUrl': 'wwww.camusbooks.com'},
     {'manager': 'El Ouali Med', 'location': "Marrakesh City", 'stars': 3, 'phone': '+212690238923', 'gmail': 'readWithUsCamus@gmail.com', 'websiteUrl': 'wwww.camusbooks.com'},
+    {'manager': 'El Ouali Med', 'location': "Marrakesh City", 'stars': 3, 'phone': '+212690238923', 'gmail': 'readWithUsCamus@gmail.com', 'websiteUrl': 'wwww.camusbooks.com'},
+    {'manager': 'El Ouali Med', 'location': "Marrakesh City", 'stars': 3, 'phone': '+212690238923', 'gmail': 'readWithUsCamus@gmail.com', 'websiteUrl': 'wwww.camusbooks.com'},
+    {'manager': 'El Ouali Med', 'location': "Marrakesh City", 'stars': 3, 'phone': '+212690238923', 'gmail': 'readWithUsCamus@gmail.com', 'websiteUrl': 'wwww.camusbooks.com'},
     ]
 
 def editors(root):
-    widgets=[]
+    widgets=scroller(root)
     for i, boo in enumerate(testList):
-        widgets+=editor(root, index=i+1, manager=boo['manager'], location=boo['location'], stars=boo['stars'],
+        widgets+=editor(widgets[0]['widget'], index=i+1, manager=boo['manager'], location=boo['location'], stars=boo['stars'],
         phone=boo['phone'], gmail=boo['gmail'], websiteUrl=boo['websiteUrl'])
     return widgets
 
@@ -42,4 +49,4 @@ def editor(root, index=2, manager='', location='', stars=0, phone='', gmail='', 
     sta=Label(frame, text=f'Stars: {stars}')
     sta.grid(row=4, column=0, columnspan=2)
 
-    return [man, loc, pho, gma, web, sta, frame]
+    return widgets([man, loc, pho, gma, web, sta, frame])

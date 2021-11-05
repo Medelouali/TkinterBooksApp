@@ -1,19 +1,18 @@
 from tkinter import *
 import tkinter.font as tkFont
 from ui.layout.browser.browser import browser
+from ui.logic.widget import deleteWidgets, widgets
 
 lastWidgets=[]
 currentPage="books"
 
 def layout(rt, reg={}, history=[]):
+    deleteWidgets(history)
     fontStyle = tkFont.Font(family = "Lucida Grande", size = 15)
     smallFont = tkFont.Font(family = "Lucida Grande", size = 10)
-    justFont = tkFont.Font(family = "Lucida Grande")
 
     global currentPage
     global lastWidgets
-    for hist in history:
-        hist.grid_forget()
     labels={
         "width": 20,
         "height": 1
@@ -22,8 +21,7 @@ def layout(rt, reg={}, history=[]):
     def switchPage(page, collect=[]):
         global currentPage
         global lastWidgets
-        for hist in collect:
-            hist.grid_forget()
+        deleteWidgets(collect)
         currentPage=page
         lastWidgets=browser(frame, page)
 
@@ -34,30 +32,32 @@ def layout(rt, reg={}, history=[]):
         width=labels["width"], height=labels["height"])
     books.grid(row=0, column=0, padx= 5)
 
-    authors=Button(frame, text="Authors", command=lambda: switchPage("authors", lastWidgets), font=smallFont, 
-        width=labels["width"], height=labels["height"])
+    authors=Button(frame, text="Authors", command=lambda: switchPage("authors", lastWidgets), 
+        font=smallFont, width=labels["width"], height=labels["height"])
     authors.grid(row=0, column=1, padx= 5)
 
     copies=Button(frame, text="Copies", command=lambda: switchPage("copies", lastWidgets), font=smallFont,
         width=labels["width"], height=labels["height"])
     copies.grid(row=0, column=2, padx= 5)
 
-    editors=Button(frame, text="Editors", command=lambda: switchPage("editors", lastWidgets), font=smallFont,
-        width=labels["width"], height=labels["height"])
+    editors=Button(frame, text="Editors", command=lambda: switchPage("editors", lastWidgets), 
+        font=smallFont, width=labels["width"], height=labels["height"])
     editors.grid(row=0, column=3, padx= 5)
 
-    #the correspondant page should be displayed, this for setting the default page
-    lastWidgets=browser(frame, currentPage)
+    childFrame=LabelFrame(frame, pady=1, font=fontStyle)
+    childFrame.grid(row=1, column=0, columnspan=3)
 
-    widgets=[frame, books, authors, copies, editors]
+    #the correspondant page should be displayed, this for setting the default page
+    lastWidgets=browser(childFrame, currentPage)
+
+    widgets_t=[frame, childFrame,books, authors, copies, editors]
     getInTouch=Button(frame, text="Get In Touch", width=labels["width"]*2, height=1, font=smallFont,
-        command=lambda: contactUs(rt, [*widgets, getInTouch, *lastWidgets]))
+        command=lambda: contactUs(rt, widgets([*widgets_t, getInTouch]) + [ *lastWidgets ]))
     getInTouch.grid(row=100, column=0, columnspan=4)
 
 
 def contactUs(rt, hist=[]):
-    for his in hist:
-        his.grid_forget()
+    deleteWidgets(hist)
     fontStyle = tkFont.Font(family = "Lucida Grande", size = 15)
     smallFont = tkFont.Font(family = "Lucida Grande", size = 10)
     justFont = tkFont.Font(family = "Lucida Grande")
@@ -80,7 +80,7 @@ def contactUs(rt, hist=[]):
 
     send=Button(frame, text="Send", padx=3, width=10, font=smallFont)
     send.grid(row=5, column=0)
-    widgets=[frame, notice, fr, messageLabel, ent, send]
-    goBack=Button(fr, text="Go Home", command=lambda: layout(rt, history=[*widgets, goBack]),
+    widgets_t=[frame, notice, fr, messageLabel, ent, send]
+    goBack=Button(fr, text="Go Home", command=lambda: layout(rt, history=widgets([*widgets_t, goBack])),
         font=smallFont)
     goBack.grid(row=0, column=1)

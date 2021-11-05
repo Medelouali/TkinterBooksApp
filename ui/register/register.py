@@ -2,13 +2,13 @@ from tkinter import *
 from threading import Event, Thread
 from ui.register.logging.logging import logging
 from ui.register.logging.registering import registering
+from ui.logic.widget import widgets, deleteWidgets
 import tkinter.font as tkFont
 
-def register(fr, last=[], err='', page="log", lastPacked=False):
+def register(fr, last=[], err='', page="log"):
     fontStyle = tkFont.Font(family = "Lucida Grande", size = 15)
     smallFont = tkFont.Font(family = "Lucida Grande", size = 10)
-    justFont = tkFont.Font(family = "Lucida Grande")
-    
+
     errMassage=""
     if(page=="signUp"):
         #
@@ -41,12 +41,12 @@ def register(fr, last=[], err='', page="log", lastPacked=False):
 
         #doo some validation later on
         signUp=Button(fr, text="Create Account", font=smallFont,
-            command=lambda: registering(fr, [signIn , *widgets], nam.get(), ema.get(), pas.get()))
+            command=lambda: registering(fr, widgets([signIn , *widgets_t]), nam.get(), ema.get(), pas.get()))
         signUp.grid(row=6, column=0, padx=40, pady=20)
         #
-        widgets=[ username, usernameE, email, emailE, password, passwordE, signUp]
+        widgets_t=[ username, usernameE, email, emailE, password, passwordE, signUp]
         signIn = Button(fr, text="Already Have Account?", font=smallFont,
-            command=lambda : commander(fr, [*widgets, signIn], err, 'signIn'))
+            command=lambda : commander(fr, widgets([*widgets_t, signIn]), err, 'signIn'))
         signIn.grid(row=7, column=0, padx=40, pady=20)
 
     elif(page=="signIn"):
@@ -76,12 +76,12 @@ def register(fr, last=[], err='', page="log", lastPacked=False):
         #logging prototype logging(historyWidgets, name, password)
         #doo some validation later on
         logIn=Button(fr, text="Log In", 
-            command=lambda: logging(fr, [ signUp, *widgets], nam.get(), pas.get()))
+            command=lambda: logging(fr, widgets([ signUp, *widgets_t]), nam.get(), pas.get()))
         logIn.grid(row=4, column=0, padx=40, pady=20)
         #
-        widgets=[ username, usernameE, password, passwordE, logIn]
+        widgets_t=[ username, usernameE, password, passwordE, logIn]
         signUp = Button(fr, text="Don't Have An Account?", font=smallFont,
-                        command=lambda : commander(fr, [signUp, *widgets ], err, 'signUp'))
+                        command=lambda : commander(fr, widgets([signUp, *widgets_t ]), err, 'signUp'))
         signUp.grid(row=5, column=0, padx=40, pady=20)
     elif(page=='newPassword'):
         frame=LabelFrame(fr, text="New Password", pady=1, font=fontStyle)
@@ -101,9 +101,9 @@ def register(fr, last=[], err='', page="log", lastPacked=False):
         codeConfirm=Entry(frame, show="*", width=60)
         codeConfirm.grid(row=3, column=1, pady=1)
 
-        widgets=[frame, email, code, codeValue, codeC, codeConfirm]
+        widgets_t=[frame, email, code, codeValue, codeC, codeConfirm]
         submit=Button(frame, text="Log In", padx=1, pady=2, font=smallFont,
-            command=lambda: logging(fr, [ submit, *widgets], '', ''))
+            command=lambda: logging(fr, widgets([ submit, *widgets_t]), '', ''))
         submit.grid(row=4, column=0, padx= 5)
     elif(page=='forgot'):
         frame=LabelFrame(fr, text="Resetting The Password", pady=1, font=fontStyle)
@@ -117,32 +117,24 @@ def register(fr, last=[], err='', page="log", lastPacked=False):
         codeValue=Entry(frame, show="*", width=50)
         codeValue.grid(row=3, column=0, pady=1)
 
-        widgets=[frame, email, code, codeValue]
+        widgets_t=[frame, email, code, codeValue]
         submit=Button(frame, text="New Password", font=smallFont, 
-            command=lambda: commander(fr, [submit, *widgets], err, 'newPassword'))
+            command=lambda: commander(fr, widgets([submit, *widgets_t]), err, 'newPassword'))
         submit.grid(row=4, column=0, padx= 5)
     else:
         signIn=Button(fr, text="Sign In", font=smallFont, 
-            command=lambda: commander(fr, [signIn, signUp, forgotPassword], err, 'signIn'))
+            command=lambda: commander(fr, widgets([signIn, signUp, forgotPassword]), err, 'signIn'))
         signIn.grid(row=0, column=0, padx=40, pady=20)
         signUp=Button(fr, text="Sign Up", font=smallFont,
-            command=lambda: commander(fr, [signUp, signIn, forgotPassword], err, 'signUp'))
+            command=lambda: commander(fr, widgets([signUp, signIn, forgotPassword]), err, 'signUp'))
         signUp.grid(row=1, column=0, padx=40, pady=20)
 
         forgotPassword=Button(fr, text="Forgot Password", font=smallFont, borderwidth=0, fg='blue',
-            command=lambda: commander(fr, [signUp, signIn, forgotPassword], err, 'forgot'))
+            command=lambda: commander(fr, widgets([signUp, signIn, forgotPassword]), err, 'forgot'))
         forgotPassword.grid(row=2, column=0, padx=40, pady=20)
     if(errMassage):
         lab=Label(fr, text=errMassage).grid(row=20, column=0, columnspan=W+E)
 
 def commander(fr, last, err='', page="log", lastPacked=False):
-    removeLast(last, lastPacked)
-    register(fr, last, err, page, lastPacked)
-
-#Clearing out the frame
-def removeLast(last, lastPacked=False):
-    for widget in last:
-        if(lastPacked):
-            widget.pack_forget()
-        else:
-            widget.grid_forget()
+    deleteWidgets(last)
+    register(fr, last, err, page)

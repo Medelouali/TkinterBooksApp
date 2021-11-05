@@ -1,17 +1,24 @@
 from tkinter import *
 
+from ui.logic.widget import widgets
+from ui.layout.browser.scroller import scroller
 
 #just for testing purposes...
 
 test=[
     { 'birthday': "12/22/2007", 'quote': "Life Is Worth Living", 'name': 'J.K.Rowling', 'place': 'New York', 'branch': 'Science Fiction', 'stars': 5},
     { 'birthday': "12/22/2007", 'quote': "Life Is Worth Living", 'name': 'J.K.Rowling', 'place': 'New York', 'branch': 'Science Fiction', 'stars': 5},
+    { 'birthday': "12/22/2007", 'quote': "Life Is Worth Living", 'name': 'J.K.Rowling', 'place': 'New York', 'branch': 'Science Fiction', 'stars': 5},
+    { 'birthday': "12/22/2007", 'quote': "Life Is Worth Living", 'name': 'J.K.Rowling', 'place': 'New York', 'branch': 'Science Fiction', 'stars': 5},
+    { 'birthday': "12/22/2007", 'quote': "Life Is Worth Living", 'name': 'J.K.Rowling', 'place': 'New York', 'branch': 'Science Fiction', 'stars': 5},
+    { 'birthday': "12/22/2007", 'quote': "Life Is Worth Living", 'name': 'J.K.Rowling', 'place': 'New York', 'branch': 'Science Fiction', 'stars': 5},
+    { 'birthday': "12/22/2007", 'quote': "Life Is Worth Living", 'name': 'J.K.Rowling', 'place': 'New York', 'branch': 'Science Fiction', 'stars': 5},
     ]
 
 def authors(root):
-    widgets=[]
+    widgets=scroller(root)
     for i, boo in enumerate(test):
-        widgets+=author(root, index=i+1, name=boo['name'], birthday=boo['birthday'], place=boo['place'], 
+        widgets+=author(widgets[0]['widget'], index=i+1, name=boo['name'], birthday=boo['birthday'], place=boo['place'], 
             branch=boo['branch'], stars=boo['stars'], quote=boo['quote'])
     return widgets
 
@@ -42,4 +49,4 @@ def author(root, index=2, name='', birthday='', place='', branch='', stars=0, qu
     bir=Label(frame, text=f'Birthday: {birthday}')
     bir.grid(row=4, column=0, columnspan=2)
 
-    return [nam, pla, bra, sta, quo, bir, frame]
+    return widgets([nam, pla, bra, sta, quo, bir, frame])

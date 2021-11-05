@@ -1,17 +1,23 @@
 from tkinter import *
-
+from ui.layout.browser.scroller import scroller
+from ui.logic.widget import widgets
 #just for testing purposes...
 
 testList=[
     { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling'},
     { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling'},
     { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling'},
+    { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling'},
+    { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling'},
+    { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling'},
+    { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling'},
+    { 'title': "Harry Poter", 'date': "12/22/2007", 'description': "Lovely book u ll ever read", 'writtenBy': 'J.K.Rowling'},
     ]
 
 def books(root):
-    widgets=[]
+    widgets=scroller(root)
     for i, boo in enumerate(testList):
-        widgets+=book(root, index=i+1, title=boo['title'], date=boo['date'], writtenBy=boo['writtenBy'], 
+        widgets+=book(widgets[0]['widget'], index=i+1, title=boo['title'], date=boo['date'], writtenBy=boo['writtenBy'], 
         description=boo['description'])
     return widgets
 
@@ -19,7 +25,7 @@ def book(root, index=2, title='', date='', description='', writtenBy=''):
     style={
         'padx': 20, 
         'pady': 1,
-        'width': 90
+        'width': 70
     }
     frame=LabelFrame(root, padx=style['padx'],pady=style['pady'])
     frame.grid(row=index, column=0, columnspan=4)
@@ -36,5 +42,5 @@ def book(root, index=2, title='', date='', description='', writtenBy=''):
     des=Label(frame, text=description)
     des.grid(row=2, column=0, columnspan=2)
     
-    return [tit, dat, wri, des, frame]
+    return widgets([tit, dat, wri, des, frame])
 
