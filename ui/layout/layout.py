@@ -6,7 +6,7 @@ from ui.logic.widget import deleteWidgets, widgets
 lastWidgets=[]
 currentPage="books"
 
-def layout(rt, reg={}, history=[]):
+def layout(rt, user=(), history=[]):
     deleteWidgets(history)
     fontStyle = tkFont.Font(family = "Lucida Grande", size = 15)
     smallFont = tkFont.Font(family = "Lucida Grande", size = 10)
@@ -25,7 +25,7 @@ def layout(rt, reg={}, history=[]):
         currentPage=page
         lastWidgets=browser(frame, page)
 
-    frame=LabelFrame(rt, text="You Are A Reader", pady=1, font=fontStyle)
+    frame=LabelFrame(rt, text=f"Hello {user[0]}", pady=1, font=fontStyle)
     frame.grid(row=0, column=0, columnspan=3)
 
     books=Button(frame, text="Books", command=lambda: switchPage("books", lastWidgets), font=smallFont,
@@ -52,11 +52,11 @@ def layout(rt, reg={}, history=[]):
 
     widgets_t=[frame, childFrame,books, authors, copies, editors]
     getInTouch=Button(frame, text="Get In Touch", width=labels["width"]*2, height=1, font=smallFont,
-        command=lambda: contactUs(rt, widgets([*widgets_t, getInTouch]) + [ *lastWidgets ]))
+        command=lambda: contactUs(rt, user, hist=widgets([*widgets_t, getInTouch]) + [ *lastWidgets ]))
     getInTouch.grid(row=100, column=0, columnspan=4)
 
 
-def contactUs(rt, hist=[]):
+def contactUs(rt, user_t, hist=[]):
     deleteWidgets(hist)
     fontStyle = tkFont.Font(family = "Lucida Grande", size = 15)
     smallFont = tkFont.Font(family = "Lucida Grande", size = 10)
@@ -68,7 +68,7 @@ def contactUs(rt, hist=[]):
     fr=LabelFrame(frame, pady=1)
     fr.grid(row=1, column=0, columnspan=3) 
 
-    notice=Label(fr, text="Please be specific and precise in your messages to get the proper response", padx=10)
+    notice=Label(fr, text=f"Please {user_t[0]} be specific and precise in your messages to get the proper response", padx=10)
     notice.grid(row=0, column=0)
 
     messageLabel=Label(frame, text="Message", font=smallFont)
@@ -81,6 +81,6 @@ def contactUs(rt, hist=[]):
     send=Button(frame, text="Send", padx=3, width=10, font=smallFont)
     send.grid(row=5, column=0)
     widgets_t=[frame, notice, fr, messageLabel, ent, send]
-    goBack=Button(fr, text="Go Home", command=lambda: layout(rt, history=widgets([*widgets_t, goBack])),
+    goBack=Button(fr, text="Go Home", command=lambda: layout(rt, user_t, history=widgets([*widgets_t, goBack])),
         font=smallFont)
     goBack.grid(row=0, column=1)

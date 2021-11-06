@@ -1,7 +1,5 @@
 from tkinter import *
-from ui.layout.layout import layout
-from ui.register.register import register
-from ui.logic.widget import widget
+import ui.register.register as reg
 
 def ui():
     root = Tk()
@@ -9,6 +7,5 @@ def ui():
     root.geometry("850x450")
     frame=LabelFrame(root, padx=40, pady=20)
     frame.pack()
-    register(frame, [ widget(frame, True) ])
-    #layout(root, reg)
+    reg.register(frame)
     root.mainloop()
