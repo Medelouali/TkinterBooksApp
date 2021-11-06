@@ -1,7 +1,7 @@
 import hashlib, binascii, os
- 
+
 def hash_password(password):
-    """Hash a password for storing."""
+    """Hashing the password to store it in the database"""
     salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
     pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), 
                 salt, 100000)
@@ -9,7 +9,7 @@ def hash_password(password):
     return (salt + pwdhash).decode('ascii')
  
 def verify_password(stored_password, provided_password):
-    """Verify a stored password against one provided by user"""
+    """Verify a stored password against the one provided by the user"""
     salt = stored_password[:64]
     stored_password = stored_password[64:]
     pwdhash = hashlib.pbkdf2_hmac('sha512', 
