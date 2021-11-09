@@ -12,5 +12,5 @@ def logging(root, history=[], email="", password=""):
         isValid=verify_password(res[0][2], password)
         if(isValid):
             deleteWidgets(history)    
-            return layout(root)
+            return layout(root, user=res[0])
     reg.register(root, last=history, err="Wrong email or password!!", page='signIn')            
